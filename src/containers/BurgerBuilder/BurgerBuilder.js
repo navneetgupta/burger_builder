@@ -4,8 +4,10 @@ class BurgerBuilder extends Component {
   render() {
     return (
       <Fragment>
-        <p>Burger</p>
-        <p>Builder Control</p>
+        <p>
+          Burger <br />
+          Builder Control
+        </p>
       </Fragment>
     );
   }
