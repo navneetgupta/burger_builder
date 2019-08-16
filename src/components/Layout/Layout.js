@@ -14,7 +14,7 @@ class Layout extends Component {
   render() {
     return (
       <Fragment>
-        <Toolbar />
+        <Toolbar drawerToggleClicked={this.toggleSidebarHandler} />
         <Sidedrawer
           show={!this.state.sideBarClosed}
           clicked={this.toggleSidebarHandler}
