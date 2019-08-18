@@ -4,6 +4,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const INGREDIENS_PRICE = {
   salad: 0.5,
@@ -22,7 +23,8 @@ class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
+    loading: false
   };
 
   addIngredientHandler = type => {
@@ -71,6 +73,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
+    this.setState({ loading: true });
     const order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice,
@@ -89,9 +92,11 @@ class BurgerBuilder extends Component {
     axios
       .post("/orders.json", order)
       .then(response => {
+        this.setState({ loading: false, purchasing: false });
         console.log(response);
       })
       .catch(err => {
+        this.setState({ loading: false, purchasing: false });
         console.log(err);
       });
   };
@@ -109,12 +114,16 @@ class BurgerBuilder extends Component {
           show={this.state.purchasing}
           modalClosed={this.updatePurchasingState}
         >
-          <OrderSummary
-            ingredients={this.state.ingredients}
-            cancel={this.updatePurchasingState}
-            continue={this.purchaseContinueHandler}
-            price={this.state.totalPrice}
-          />
+          {!this.state.loading ? (
+            <OrderSummary
+              ingredients={this.state.ingredients}
+              cancel={this.updatePurchasingState}
+              continue={this.purchaseContinueHandler}
+              price={this.state.totalPrice}
+            />
+          ) : (
+            <Spinner />
+          )}
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
