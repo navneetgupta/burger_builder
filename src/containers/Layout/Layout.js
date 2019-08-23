@@ -2,6 +2,7 @@ import React, { Fragment, Component } from "react";
 import classes from "./Layout.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Sidedrawer from "../../components/Navigation/Sidedrawer/Sidedrawer";
+import { withRouter } from "react-router-dom";
 
 class Layout extends Component {
   state = {
@@ -11,6 +12,10 @@ class Layout extends Component {
     const oldState = this.state.sideBarActive;
     this.setState({ sideBarActive: !oldState });
   };
+  componentDidMount() {
+    console.log("Layout Component");
+    console.log(this.props);
+  }
   render() {
     return (
       <Fragment>
@@ -25,4 +30,4 @@ class Layout extends Component {
   }
 }
 
-export default Layout;
+export default withRouter(Layout);
