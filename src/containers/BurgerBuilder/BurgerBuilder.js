@@ -87,32 +87,45 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Sobhit Gupta",
-        address: {
-          street1: "101, Raymond Road",
-          street2: "Plakiesfnete Market, Gandu.",
-          zipCode: 12344,
-          country: "Zincronia"
-        },
-        email: "stesfdf@sfdg.com"
-      },
-      deliveryMethod: "fastest"
-    };
-    axios
-      .post("/orders.json", order)
-      .then(response => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(response);
-      })
-      .catch(err => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(err);
-      });
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString
+    });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: "Sobhit Gupta",
+    //     address: {
+    //       street1: "101, Raymond Road",
+    //       street2: "Plakiesfnete Market, Gandu.",
+    //       zipCode: 12344,
+    //       country: "Zincronia"
+    //     },
+    //     email: "stesfdf@sfdg.com"
+    //   },
+    //   deliveryMethod: "fastest"
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then(response => {
+    //     this.setState({ loading: false, purchasing: false });
+    //     console.log(response);
+    //   })
+    //   .catch(err => {
+    //     this.setState({ loading: false, purchasing: false });
+    //     console.log(err);
+    //   });
   };
 
   render() {
