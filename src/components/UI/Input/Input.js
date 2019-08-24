@@ -21,6 +21,8 @@ const Input = props => {
         />
       );
       break;
+    // case "select":
+    //  	<select classNAm>
     default:
       inputElement = (
         <input
