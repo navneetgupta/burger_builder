@@ -65,23 +65,15 @@ class ContactData extends Component {
   placeOrderHandler = event => {
     event.preventDefault();
     console.log("Order Placed");
-    console.log(this.props);
-
     this.setState({ loading: true });
+    const formData = {};
+    for (let key in this.state.orderForm) {
+      formData[key] = this.state.orderForm[key].value;
+    }
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
-      // customer: {
-      //   name: "Sobhit Gupta",
-      //   address: {
-      //     street1: "101, Raymond Road",
-      //     street2: "Plakiesfnete Market, Gandu.",
-      //     zipCode: 12344,
-      //     country: "Zincronia"
-      //   },
-      //   email: "stesfdf@sfdg.com"
-      // },
-      deliveryMethod: "fastest"
+      orderData: formData
     };
     axios
       .post("/orders.json", order)
@@ -116,7 +108,7 @@ class ContactData extends Component {
     }
 
     let form = (
-      <form method="post">
+      <form method="post" onSubmit={this.placeOrderHandler}>
         {fromElmtArray.map(elmt => {
           return (
             <Input
@@ -129,9 +121,7 @@ class ContactData extends Component {
             />
           );
         })}
-        <Button btnType="Success" clicked={this.placeOrderHandler}>
-          Place Order
-        </Button>
+        <Button btnType="Success">Place Order</Button>
       </form>
     );
     if (this.state.loading) form = <Spinner />;
