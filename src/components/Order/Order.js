@@ -6,9 +6,17 @@ const Order = props => {
   if (props.ingredients) {
     ingredients = Object.keys(props.ingredients).map(key => {
       return (
-        <span>
-          <span style={{ textTransform: "capitalize" }}>{key}: </span>{" "}
-          <strong>{props.ingredients[key]}, </strong>
+        <span
+          key={key}
+          style={{
+            textTransform: "capitalize",
+            display: "inline-block",
+            padding: "5px",
+            margin: "0 8px",
+            border: "1px solid #ccc"
+          }}
+        >
+          {key}:<strong>({props.ingredients[key]}) </strong>{" "}
         </span>
       );
     });
