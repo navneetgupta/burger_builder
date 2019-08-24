@@ -27,7 +27,7 @@ class BurgerBuilder extends Component {
     axios
       .get("https://react-mac-d.firebaseio.com/ingredients.json")
       .then(res => {
-        const totalPrice = 4.5; // To Update based on default ingredients
+        const totalPrice = 4.0; // To Update based on default ingredients
         // Need to update purchaisng state also
         this.setState({
           loading: false,
