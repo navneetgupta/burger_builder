@@ -6,10 +6,10 @@ const Order = props => {
   if (props.ingredients) {
     ingredients = Object.keys(props.ingredients).map(key => {
       return (
-        <p>
+        <span>
           <span style={{ textTransform: "capitalize" }}>{key}: </span>{" "}
-          <strong>{props.ingredients[key]}</strong>
-        </p>
+          <strong>{props.ingredients[key]}, </strong>
+        </span>
       );
     });
   }
