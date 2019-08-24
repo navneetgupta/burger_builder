@@ -5,7 +5,7 @@ const Order = props => {
   let ingredients = null;
   if (props.ingredients) {
     ingredients = Object.keys(props.ingredients).map(key => {
-      return (
+      return props.ingredients[key] > 0 ? (
         <span
           key={key}
           style={{
@@ -18,7 +18,7 @@ const Order = props => {
         >
           {key}:<strong>({props.ingredients[key]}) </strong>{" "}
         </span>
-      );
+      ) : null;
     });
   }
   return (
