@@ -7,11 +7,58 @@ import Input from "../../../components/UI/Input/Input";
 
 class ContactData extends Component {
   state = {
-    name: "Navneet",
-    email: "test@test.com",
-    address: {
-      street: "Street 1",
-      postalCode: 123456
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name"
+        },
+        value: ""
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street Address"
+        },
+        value: ""
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Postal Code"
+        },
+        value: ""
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Country"
+        },
+        value: ""
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Email"
+        },
+        value: ""
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest Delivery" },
+            { value: "cheapest", displayValue: "Cheapest Delivery" },
+            { value: "standard", displayValue: "Standard Delivery" }
+          ]
+        },
+        value: ""
+      }
     },
     loading: false
   };
@@ -24,16 +71,16 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.totalPrice,
-      customer: {
-        name: "Sobhit Gupta",
-        address: {
-          street1: "101, Raymond Road",
-          street2: "Plakiesfnete Market, Gandu.",
-          zipCode: 12344,
-          country: "Zincronia"
-        },
-        email: "stesfdf@sfdg.com"
-      },
+      // customer: {
+      //   name: "Sobhit Gupta",
+      //   address: {
+      //     street1: "101, Raymond Road",
+      //     street2: "Plakiesfnete Market, Gandu.",
+      //     zipCode: 12344,
+      //     country: "Zincronia"
+      //   },
+      //   email: "stesfdf@sfdg.com"
+      // },
       deliveryMethod: "fastest"
     };
     axios
@@ -51,12 +98,7 @@ class ContactData extends Component {
   render() {
     let form = (
       <form method="post">
-        <Input
-          inputtype="input"
-          type="text"
-          name="name"
-          placeholder="Your Name"
-        />
+        <Input elementType="..." elementConfig="..." value="..." />
         <Input
           inputtype="input"
           type="text"
