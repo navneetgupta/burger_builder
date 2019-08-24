@@ -27,7 +27,7 @@ class BurgerBuilder extends Component {
     axios
       .get("https://react-mac-d.firebaseio.com/ingredients.json")
       .then(res => {
-        const totalPrice = 4.5; // To Update based on default ingredients
+        const totalPrice = 4.0; // To Update based on default ingredients
         // Need to update purchaisng state also
         this.setState({
           loading: false,
@@ -95,37 +95,12 @@ class BurgerBuilder extends Component {
           encodeURIComponent(this.state.ingredients[i])
       );
     }
+    queryParams.push("price=" + this.state.totalPrice);
     const queryString = queryParams.join("&");
     this.props.history.push({
       pathname: "/checkout",
       search: "?" + queryString
     });
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: "Sobhit Gupta",
-    //     address: {
-    //       street1: "101, Raymond Road",
-    //       street2: "Plakiesfnete Market, Gandu.",
-    //       zipCode: 12344,
-    //       country: "Zincronia"
-    //     },
-    //     email: "stesfdf@sfdg.com"
-    //   },
-    //   deliveryMethod: "fastest"
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then(response => {
-    //     this.setState({ loading: false, purchasing: false });
-    //     console.log(response);
-    //   })
-    //   .catch(err => {
-    //     this.setState({ loading: false, purchasing: false });
-    //     console.log(err);
-    //   });
   };
 
   render() {
