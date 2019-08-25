@@ -112,6 +112,7 @@ class ContactData extends Component {
 
   checkValidity = (value, rules) => {
     let isValid = true;
+    if (!rules) return true;
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
     }
@@ -156,8 +157,10 @@ class ContactData extends Component {
               elementType={elmt.config.elementType}
               elementConfig={elmt.config.elementConfig}
               value={elmt.config.value}
+              invalid={!elmt.config.valid}
               changed={event => this.inputVlaueChangeHandler(event, elmt.id)}
               name={elmt.id}
+              shouldValidate={elmt.config.validation}
             />
           );
         })}
