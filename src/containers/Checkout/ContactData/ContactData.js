@@ -14,7 +14,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Your Name"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       street: {
         elementType: "input",
@@ -22,7 +26,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Street Address"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       zipCode: {
         elementType: "input",
@@ -30,7 +38,13 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Postal Code"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5
+        },
+        valid: false
       },
       country: {
         elementType: "input",
@@ -38,7 +52,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Your Country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: "input",
@@ -46,7 +64,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Your Email"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       deliveryMethod: {
         elementType: "select",
@@ -88,11 +110,28 @@ class ContactData extends Component {
       });
   };
 
+  checkValidity = (value, rules) => {
+    let isValid = false;
+    if (rules.required) {
+      isValid = value.trim() !== "";
+    }
+    if (rules.minLength) {
+      isValid = value.trim().length >= rules.minLength;
+    }
+    if (rules.maxLength) {
+      isValid = value.trim().length <= rules.maxLength;
+    }
+    return isValid;
+  };
   inputVlaueChangeHandler = (event, inputIdentifier) => {
     const updatedOrderForm = { ...this.state.orderForm };
 
     const updatedFromElt = { ...updatedOrderForm[inputIdentifier] };
     updatedFromElt.value = event.target.value;
+    updatedFromElt.valid = this.checkValidity(
+      event.target.value,
+      updatedFromElt.validation
+    );
     updatedOrderForm[inputIdentifier] = updatedFromElt;
     this.setState({
       orderForm: updatedOrderForm
