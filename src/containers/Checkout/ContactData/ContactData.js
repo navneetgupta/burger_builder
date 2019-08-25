@@ -84,9 +84,11 @@ class ContactData extends Component {
             { value: "standard", displayValue: "Standard Delivery" }
           ]
         },
-        value: ""
+        value: "",
+        valid: true
       }
     },
+    isFormValid: false,
     loading: false
   };
   placeOrderHandler = event => {
@@ -141,8 +143,13 @@ class ContactData extends Component {
     updatedFromElt.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFromElt;
     console.log(updatedFromElt);
+    let isFormValid = true;
+    for (let identifier in updatedOrderForm) {
+      isFormValid = updatedOrderForm[identifier].valid && isFormValid;
+    }
     this.setState({
-      orderForm: updatedOrderForm
+      orderForm: updatedOrderForm,
+      isFormValid: isFormValid
     });
   };
   render() {
@@ -171,7 +178,9 @@ class ContactData extends Component {
             />
           );
         })}
-        <Button btnType="Success">Place Order</Button>
+        <Button btnType="Success" disabled={!this.state.isFormValid}>
+          Place Order
+        </Button>
       </form>
     );
     if (this.state.loading) form = <Spinner />;
