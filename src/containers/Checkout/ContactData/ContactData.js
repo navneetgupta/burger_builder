@@ -111,15 +111,15 @@ class ContactData extends Component {
   };
 
   checkValidity = (value, rules) => {
-    let isValid = false;
+    let isValid = true;
     if (rules.required) {
-      isValid = value.trim() !== "";
+      isValid = value.trim() !== "" && isValid;
     }
     if (rules.minLength) {
-      isValid = value.trim().length >= rules.minLength;
+      isValid = value.trim().length >= rules.minLength && isValid;
     }
     if (rules.maxLength) {
-      isValid = value.trim().length <= rules.maxLength;
+      isValid = value.trim().length <= rules.maxLength && isValid;
     }
     return isValid;
   };
@@ -133,6 +133,7 @@ class ContactData extends Component {
       updatedFromElt.validation
     );
     updatedOrderForm[inputIdentifier] = updatedFromElt;
+    console.log(updatedFromElt);
     this.setState({
       orderForm: updatedOrderForm
     });
