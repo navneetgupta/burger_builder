@@ -12,28 +12,10 @@ import * as actionCreator from "../../store/actions/index";
 class BurgerBuilder extends Component {
   state = {
     purchasable: false,
-    purchasing: false,
-    loading: false
+    purchasing: false
   };
 
-  componentDidMount() {
-    // axios
-    //   .get("https://react-mac-d.firebaseio.com/ingredients.json")
-    //   .then(res => {
-    //     const totalPrice = 4.0; // To Update based on default ingredients
-    //     // Need to update purchaisng state also
-    //     this.setState({
-    //       loading: false,
-    //       purchasing: false,
-    //       ingredients: res.data,
-    //       totalPrice: totalPrice
-    //     });
-    //     this.updatePurchaseState(res.data);
-    //   })
-    //   .catch(err => {
-    //     // this.setState({ loading: false, purchasing: false });
-    //   });
-  }
+  componentDidMount() {}
 
   updatePurchaseState = ingredients => {
     const sum = Object.keys(ingredients)
@@ -62,7 +44,11 @@ class BurgerBuilder extends Component {
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
-    let burger = <Spinner />;
+    let burger = this.props.error ? (
+      <p>Ingredients could not be fetched!!</p>
+    ) : (
+      <Spinner />
+    );
     let orderSummary = <Spinner />;
     if (this.props.ings) {
       burger = (
@@ -82,16 +68,6 @@ class BurgerBuilder extends Component {
           />
         </Fragment>
       );
-      if (!this.state.loading) {
-        orderSummary = (
-          <OrderSummary
-            ingredients={this.props.ings}
-            cancel={this.updatePurchasingState}
-            continue={this.purchaseContinueHandler}
-            price={this.props.price}
-          />
-        );
-      }
     }
     return (
       <Fragment>
