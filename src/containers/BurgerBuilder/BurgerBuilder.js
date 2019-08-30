@@ -118,7 +118,7 @@ const mapDispatchToProps = dispatch => {
     onIngedientAdded: ingredient =>
       dispatch(actionCreator.addIngredient(ingredient)),
     onIngredientRemoved: ingredient =>
-      dispatch(actionCreator.addIngredient(ingredient))
+      dispatch(actionCreator.removeIngredient(ingredient))
   };
 };
 
