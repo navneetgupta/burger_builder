@@ -22,6 +22,11 @@ const order_reducer = (state = initialState, action) => {
         ...state,
         loading: false
       };
+    case actionTypes.PURCHASE_ORDER_START:
+      return {
+        ...state,
+        loading: true
+      };
     default:
       return state;
   }

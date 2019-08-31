@@ -91,8 +91,7 @@ class ContactData extends Component {
         valid: true
       }
     },
-    isFormValid: false,
-    loading: false
+    isFormValid: false
   };
   placeOrderHandler = event => {
     event.preventDefault();
@@ -174,7 +173,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) form = <Spinner />;
+    if (this.props.loading) form = <Spinner />;
     return (
       <div className={classes.ContactData}>
         <h4>Enter Your Contact Details</h4>
@@ -187,7 +186,8 @@ class ContactData extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    totalPrice: state.totalPrice,
+    loading: state.loading
   };
 };
 
