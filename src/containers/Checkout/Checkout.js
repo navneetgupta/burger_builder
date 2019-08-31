@@ -6,9 +6,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 
 class Checkout extends Component {
-  componentDidMount() {
-    this.props.onInitPurchase();
-  }
   cancelCheckoutHandler = () => {
     console.log("checkout cancel");
     this.props.history.goBack();
@@ -50,13 +47,5 @@ const mapStateToProps = state => {
     purchased: state.orderReducer.purchased
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    onInitPurchase: () => dispatch(actionCreators.purchaseInit())
-  };
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Checkout);
+export default connect(mapStateToProps)(Checkout);
