@@ -5,6 +5,8 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
+import withErrorHandler from "../../../hoc/withErrorHandler";
+import * as actionCreators from "../../../store/actions";
 
 class ContactData extends Component {
   state = {
@@ -94,8 +96,6 @@ class ContactData extends Component {
   };
   placeOrderHandler = event => {
     event.preventDefault();
-    console.log("Order Placed");
-    this.setState({ loading: true });
     const formData = {};
     for (let key in this.state.orderForm) {
       formData[key] = this.state.orderForm[key].value;
@@ -105,6 +105,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       orderData: formData
     };
+    this.props.onOrderBurger(order);
   };
 
   checkValidity = (value, rules) => {
@@ -189,4 +190,14 @@ const mapStateToProps = state => {
     totalPrice: state.totalPrice
   };
 };
-export default connect(mapStateToProps)(ContactData);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onOrderBurger: orderData =>
+      dispatch(actionCreators.purchaseBurgerStart(orderData))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(ContactData, axios));
