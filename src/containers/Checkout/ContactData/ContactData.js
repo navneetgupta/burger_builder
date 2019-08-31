@@ -87,7 +87,7 @@ class ContactData extends Component {
             { value: "standard", displayValue: "Standard Delivery" }
           ]
         },
-        value: "",
+        value: "fastest",
         valid: true
       }
     },
@@ -185,9 +185,9 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    loading: state.loading
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    loading: state.orderReducer.loading
   };
 };
 
