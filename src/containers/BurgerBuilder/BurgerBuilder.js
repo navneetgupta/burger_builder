@@ -70,6 +70,14 @@ class BurgerBuilder extends Component {
           />
         </Fragment>
       );
+      orderSummary = (
+        <OrderSummary
+          ingredients={this.props.ings}
+          cancel={this.updatePurchasingState}
+          continue={this.purchaseContinueHandler}
+          price={this.props.price}
+        />
+      );
     }
     return (
       <Fragment>

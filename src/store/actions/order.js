@@ -22,7 +22,7 @@ export const purchaseOrderStart = () => {
 };
 export const purchaseBurgerStart = orderData => {
   return dispatch => {
-    dispatch(purchaseOrderStart());
+    purchaseOrderStart();
     axios
       .post("/orders.json", orderData)
       .then(response => {
