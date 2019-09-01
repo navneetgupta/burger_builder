@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   loading: false,
@@ -10,28 +11,28 @@ const initialState = {
 const reducers = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
-      return {
+      return updateObject(state, {
         loading: true,
         token: null,
         userId: null,
         error: null
-      };
+      });
     case actionTypes.AUTH_SUCCESS:
-      return {
+      return updateObject(state, {
         loading: false,
-        userId: action.authData.email,
+        userId: action.authData.localId,
         token: action.authData.idToken,
         error: null
-      };
+      });
     case actionTypes.AUTH_FAILED:
-      return {
+      return updateObject(state, {
         loading: false,
         token: null,
         userId: null,
         error: action.error
-      };
+      });
     default:
-      return state;
+      return updateObject(state, {});
   }
 };
 
