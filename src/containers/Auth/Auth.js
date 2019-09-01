@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import classes from "./Auth.module.css";
+import { connect } from "react-redux";
 
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import * as actionCreators from "../../store/actions";
 
 class Auth extends Component {
   state = {
@@ -60,18 +62,6 @@ class Auth extends Component {
   };
 
   inputValueChangeHandler = (event, inputIdentifier) => {
-    // const updatedControls = { ...this.state.controls };
-    //
-    // const updatedControlsElt = { ...updatedControls[inputIdentifier] };
-    // updatedControlsElt.value = event.target.value;
-    // updatedControlsElt.valid = this.checkValidity(
-    //   event.target.value,
-    //   updatedControlsElt.validation
-    // );
-    // updatedControlsElt.touched = true;
-    // updatedControls[inputIdentifier] = updatedControlsElt;
-    // console.log(updatedControlsElt);
-    //
     const updatedControls = {
       ...this.state.controls,
       [inputIdentifier]: {
@@ -92,6 +82,14 @@ class Auth extends Component {
       controls: updatedControls,
       isFormValid: isFormValid
     });
+  };
+
+  loginHandler = event => {
+    event.preventDefault();
+    this.props.onAuthenticate(
+      this.state.controls.email.value,
+      this.state.controls.password.value
+    );
   };
 
   render() {
@@ -124,7 +122,7 @@ class Auth extends Component {
         </Button>
       </form>
     );
-    // if (this.props.loading) form = <Spinner />;
+    if (this.props.loading) form = <Spinner />;
     return (
       <div className={classes.Auth}>
         <h4>Please Login</h4>
@@ -134,4 +132,19 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapStateToProps = state => {
+  return {
+    loading: state.authReducer.loading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthenticate: (email, password) =>
+      dispatch(actionCreators.auth(email, password))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth);
