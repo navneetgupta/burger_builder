@@ -21,6 +21,19 @@ export const authFailed = error => {
   };
 };
 
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  };
+};
+
+export const checkAuthTimeout = expiryTime => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, expiryTime * 1000);
+  };
+};
 export const auth = (email, password, isSignUp) => {
   console.log(email, password);
   return dispatch => {
@@ -40,6 +53,7 @@ export const auth = (email, password, isSignUp) => {
       .then(res => {
         console.log(res);
         dispatch(authSuccess(res.data));
+        dispatch(checkAuthTimeout(res.data.expiresIn));
       })
       .catch(err => {
         console.log(err);
