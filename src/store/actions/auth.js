@@ -43,7 +43,7 @@ export const auth = (email, password, isSignUp) => {
       })
       .catch(err => {
         console.log(err);
-        dispatch(authFailed(err));
+        dispatch(authFailed(err.response.data.error));
       });
     // setTimeout(() => {
     //   dispatch(authSuccess({ success: true }));
