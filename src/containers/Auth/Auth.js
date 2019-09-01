@@ -30,7 +30,8 @@ class Auth extends Component {
         },
         value: "",
         validation: {
-          required: true
+          required: true,
+          minLength: 6
         },
         valid: false,
         touched: false
@@ -50,6 +51,10 @@ class Auth extends Component {
     }
     if (rules.maxLength) {
       isValid = value.trim().length <= rules.maxLength && isValid;
+    }
+    if (rules.isEmail) {
+      var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
+      isValid = re.test(value);
     }
     return isValid;
   };
