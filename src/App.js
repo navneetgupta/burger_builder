@@ -11,7 +11,7 @@ function App() {
     <div>
       <Layout>
         <Switch>
-          <Route path="/login" component={Auth} />
+          <Route path="/authenticate" component={Auth} />
           <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/" exact component={BurgerBuilder} />
