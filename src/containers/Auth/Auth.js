@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./Auth.module.css";
 import { connect } from "react-redux";
-
+import { Redirect } from "react-router-dom";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -102,6 +102,11 @@ class Auth extends Component {
     });
   };
 
+  componentDidMount() {
+    if (!this.props.building && this.props.authRedirectPath !== "/") {
+      this.props.onSetAuthRedirectPath();
+    }
+  }
   render() {
     const fromElmtArray = [];
     for (let key in this.state.controls) {
@@ -137,8 +142,13 @@ class Auth extends Component {
     if (this.props.error) {
       errorMsg = <p>{this.props.error.message}</p>;
     }
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+    }
     return (
       <div className={classes.Auth}>
+        {authRedirect}
         {errorMsg}
         <h4>Please {this.state.isSignUp ? "Sign-Up" : "Sign-In"}</h4>
         {form}
@@ -153,14 +163,19 @@ class Auth extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.authReducer.loading,
-    error: state.authReducer.error
+    error: state.authReducer.error,
+    isAuthenticated: state.authReducer.token != null,
+    building: state.burgerBuilder.building,
+    authRedirectPath: state.authReducer.authRedirectPath
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuthenticate: (email, password, isSignUp) =>
-      dispatch(actionCreators.auth(email, password, isSignUp))
+      dispatch(actionCreators.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: () =>
+      dispatch(actionCreators.setAuthRedirectPath("/"))
   };
 };
 export default connect(
