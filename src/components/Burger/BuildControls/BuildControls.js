@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./BuildControls.module.css";
 import BuildControl from "./BuildControl/BuildControl";
+import { Redirect } from "react-router-dom";
 
 const controls = [
   { label: "Salad", type: "salad" },
@@ -30,7 +31,7 @@ const BuildControls = props => {
         disabled={!props.purchasable}
         onClick={props.purchase}
       >
-        ORDER NOW
+        {props.isAuthenticated ? "ORDER NOW" : "SIGN UP/ SING IN TO ORDER"}
       </button>
     </div>
   );
