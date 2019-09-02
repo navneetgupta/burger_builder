@@ -64,3 +64,10 @@ export const auth = (email, password, isSignUp) => {
     // }, 2000);
   };
 };
+
+export const setAuthRedirectPath = path => {
+  return {
+    type: actionTypes.SET_AUTH_REDIRECT,
+    path: path
+  };
+};

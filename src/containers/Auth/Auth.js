@@ -102,6 +102,11 @@ class Auth extends Component {
     });
   };
 
+  componentDidMount() {
+    if (!this.props.building && this.props.authRedirectPath !== "/") {
+      this.props.onSetAuthRedirectPath();
+    }
+  }
   render() {
     const fromElmtArray = [];
     for (let key in this.state.controls) {
@@ -139,7 +144,7 @@ class Auth extends Component {
     }
     let authRedirect = null;
     if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to="/" />;
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
     return (
       <div className={classes.Auth}>
@@ -159,14 +164,18 @@ const mapStateToProps = state => {
   return {
     loading: state.authReducer.loading,
     error: state.authReducer.error,
-    isAuthenticated: state.authReducer.token != null
+    isAuthenticated: state.authReducer.token != null,
+    building: state.burgerBuilder.building,
+    authRedirectPath: state.authReducer.authRedirectPath
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuthenticate: (email, password, isSignUp) =>
-      dispatch(actionCreators.auth(email, password, isSignUp))
+      dispatch(actionCreators.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: () =>
+      dispatch(actionCreators.setAuthRedirectPath("/"))
   };
 };
 export default connect(
