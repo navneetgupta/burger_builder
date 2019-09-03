@@ -56,8 +56,10 @@ class Auth extends Component {
       isValid = value.trim().length <= rules.maxLength && isValid;
     }
     if (rules.isEmail) {
-      var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
-      isValid = re.test(value);
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+      // var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
+      // isValid = re.test(value);
     }
     return isValid;
   };
@@ -174,8 +176,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAuthenticate: (email, password, isSignUp) =>
       dispatch(actionCreators.auth(email, password, isSignUp)),
-    onSetAuthRedirectPath: () =>
-      dispatch(actionCreators.setAuthRedirectPath("/"))
+    onSetAuthRedirectPath: () => dispatch(actionCreators.setAuthRedirectPath())
   };
 };
 export default connect(
