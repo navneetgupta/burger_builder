@@ -8,7 +8,7 @@ import * as actionCreators from "../../store/actions";
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onFetchOrderInit(this.props.token);
+    this.props.onFetchOrderInit(this.props.token, this.props.userId);
   }
 
   render() {
@@ -36,13 +36,15 @@ const mapStateToProps = state => {
   return {
     orders: state.orderReducer.orders,
     loading: state.orderReducer.loading,
-    token: state.authReducer.token
+    token: state.authReducer.token,
+    userId: state.authReducer.userId
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrderInit: token => dispatch(actionCreators.fetchOrders(token))
+    onFetchOrderInit: (token, userId) =>
+      dispatch(actionCreators.fetchOrders(token, userId))
   };
 };
 
