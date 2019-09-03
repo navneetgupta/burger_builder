@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Layout from "./containers/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
+import CheckoutNew from "./containers/Checkout/CheckoutNew";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import Orders from "./containers/Orders/Orders";
 import Auth from "./containers/Auth/Auth";
@@ -17,6 +18,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/authenticate" component={Auth} />
+        <Route path="/checkout" component={CheckoutNew} />
         <Route path="/" exact component={BurgerBuilder} />
         <Redirect to="/" />
       </Switch>
