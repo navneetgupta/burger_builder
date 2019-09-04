@@ -2,9 +2,6 @@ import React, { Fragment, Component } from "react";
 import Button from "../../UI/Button/Button";
 
 class OrderSummary extends Component {
-  UNSAFE_componentWillUpdate() {
-    console.log("[OrderSummary] will Update");
-  }
   render() {
     const ingredinetSummary = Object.keys(this.props.ingredients).map(key => {
       return (

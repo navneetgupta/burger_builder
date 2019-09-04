@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 import * as actionCreators from "../../../store/actions";
+import { updateObject, checkValidity } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -73,7 +74,8 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         touched: false
@@ -108,31 +110,20 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, this.props.token);
   };
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
-    if (!rules) return true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.trim().length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.trim().length <= rules.maxLength && isValid;
-    }
-    return isValid;
-  };
   inputVlaueChangeHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFromElt = updateObject(this.state.orderForm[inputIdentifier], {
+      value: event.target.value,
+      valid: checkValidity(
+        event.target.value,
+        this.state.orderForm[inputIdentifier].validation
+      ),
+      touched: true
+    });
 
-    const updatedFromElt = { ...updatedOrderForm[inputIdentifier] };
-    updatedFromElt.value = event.target.value;
-    updatedFromElt.valid = this.checkValidity(
-      event.target.value,
-      updatedFromElt.validation
-    );
-    updatedFromElt.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFromElt;
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFromElt
+    });
+
     console.log(updatedFromElt);
     let isFormValid = true;
     for (let identifier in updatedOrderForm) {

@@ -9,9 +9,6 @@ class Modal extends Component {
       nextProps.children !== this.props.children
     );
   }
-  UNSAFE_componentWillUpdate() {
-    console.log("[Modal] will Update");
-  }
   render() {
     return (
       <Fragment>
