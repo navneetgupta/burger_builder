@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 import * as actionCreators from "../../../store/actions";
+import { updateObject } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -73,7 +74,8 @@ class ContactData extends Component {
         },
         value: "",
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         touched: false
@@ -120,19 +122,29 @@ class ContactData extends Component {
     if (rules.maxLength) {
       isValid = value.trim().length <= rules.maxLength && isValid;
     }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+      // var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i;
+      // isValid = re.test(value);
+    }
     return isValid;
   };
   inputVlaueChangeHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFromElt = updateObject(this.state.orderForm[inputIdentifier], {
+      value: event.target.value,
+      valid: this.checkValidity(
+        event.target.value,
+        this.state.orderForm[inputIdentifier].validation
+      ),
+      touched: true
+    });
 
-    const updatedFromElt = { ...updatedOrderForm[inputIdentifier] };
-    updatedFromElt.value = event.target.value;
-    updatedFromElt.valid = this.checkValidity(
-      event.target.value,
-      updatedFromElt.validation
-    );
-    updatedFromElt.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFromElt;
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFromElt
+    });
+
     console.log(updatedFromElt);
     let isFormValid = true;
     for (let identifier in updatedOrderForm) {
