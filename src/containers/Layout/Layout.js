@@ -13,10 +13,6 @@ class Layout extends Component {
     const oldState = this.state.sideBarActive;
     this.setState({ sideBarActive: !oldState });
   };
-  componentDidMount() {
-    console.log("Layout Component");
-    console.log(this.props);
-  }
   render() {
     return (
       <Fragment>
