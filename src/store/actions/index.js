@@ -4,5 +4,11 @@ export {
   removeIngredient,
   initIngredients
 } from "./burgerBuilder";
-export { auth, logout, setAuthRedirectPath, authCheckState } from "./auth";
+export {
+  auth,
+  logout,
+  logoutSucceed,
+  setAuthRedirectPath,
+  authCheckState
+} from "./auth";
 //authStart, authSuccess, authFailed
